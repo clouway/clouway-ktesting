@@ -22,6 +22,10 @@ repositories {
   mavenCentral()
 }
 
+configurations {
+  providedCompile
+}
+
 dependencies {
   compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
@@ -52,4 +56,9 @@ dependencies {
    compile group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'
    compile 'com.github.tomakehurst:wiremock:1.58'
    compile 'com.clouway.testing:clouway-ktesting-json:0.0.1'
+}
+
+javadoc {
+  failOnError = false
+  classpath = configurations.compile + configurations.providedCompile
 }
