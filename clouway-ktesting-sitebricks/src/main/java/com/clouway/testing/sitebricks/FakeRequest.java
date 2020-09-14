@@ -3,6 +3,7 @@ package com.clouway.testing.sitebricks;
 import com.clouway.telcong.testing.JsonBuilder;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.inject.TypeLiteral;
 import com.google.sitebricks.client.Transport;
@@ -12,6 +13,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Miroslav Genov (miroslav.genov@clouway.com)
@@ -21,6 +24,8 @@ public class FakeRequest implements Request {
   public static class Builder {
     private final JsonBuilder jsonBuilder;
     private Transport transport;
+    public ImmutableMap.Builder<String, String> headers = ImmutableMap.builder();
+
 
     public Builder(JsonBuilder jsonBuilder) {
       this.jsonBuilder = jsonBuilder;
@@ -30,29 +35,34 @@ public class FakeRequest implements Request {
       this.transport = transport;
       return this;
     }
+    public Builder header(String name, String value) {
+      headers.put(name, value);
+      return this;
+    }
 
     public FakeRequest build() {
-      return new FakeRequest(jsonBuilder, transport);
+      return new FakeRequest(jsonBuilder, transport, headers.build());
     }
   }
 
   private final String body;
   private Transport transport;
   public ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-  public ImmutableMap.Builder<String, String> headers = ImmutableMap.builder();
+  public Map<String, String> headers = new HashMap<String, String>();
   public ImmutableListMultimap.Builder<String, String> multiParams = ImmutableListMultimap.builder();
 
   public FakeRequest(JsonBuilder body) {
-    this(body, null);
+    this(body, null, new HashMap<String, String>());
   }
 
   public FakeRequest(String body) {
     this.body = body;
   }
 
-  public FakeRequest(JsonBuilder body, Transport transport) {
+  public FakeRequest(JsonBuilder body, Transport transport, Map<String, String> headers) {
     this.body = body.build();
     this.transport = transport;
+    this.headers = headers;
   }
 
   public static Builder newRequest(JsonBuilder jsonBuilder) {
@@ -60,7 +70,7 @@ public class FakeRequest implements Request {
   }
 
   public static FakeRequest newRequest() {
-    return new FakeRequest(JsonBuilder.aNewJson(), null);
+    return new FakeRequest(JsonBuilder.aNewJson(), null, Maps.<String, String>newHashMap());
   }
 
   public FakeRequest parameter(String name, String value) {
@@ -161,7 +171,7 @@ public class FakeRequest implements Request {
 
   @Override
   public String header(String name) {
-    return headers.build().get(name);
+    return headers.get(name);
   }
 
   @Override

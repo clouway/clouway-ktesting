@@ -22,7 +22,7 @@ allprojects {
   targetCompatibility = 1.7
 
   group = 'com.clouway.testing'
-  version = '0.0.7'
+  version = '0.0.8'
 
   modifyPom {
     project {
