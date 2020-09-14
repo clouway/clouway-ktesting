@@ -39,6 +39,7 @@ public class FakeRequest implements Request {
   private final String body;
   private Transport transport;
   public ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+  public ImmutableMap.Builder<String, String> headers = ImmutableMap.builder();
   public ImmutableListMultimap.Builder<String, String> multiParams = ImmutableListMultimap.builder();
 
   public FakeRequest(JsonBuilder body) {
@@ -74,6 +75,11 @@ public class FakeRequest implements Request {
 
   public FakeRequest parameter(String name, Iterable<String> values) {
     this.multiParams.putAll(name, values);
+    return this;
+  }
+
+  public FakeRequest header(String name, String value) {
+    this.headers.put(name, value);
     return this;
   }
 
@@ -155,7 +161,7 @@ public class FakeRequest implements Request {
 
   @Override
   public String header(String name) {
-    return null;
+    return headers.build().get(name);
   }
 
   @Override

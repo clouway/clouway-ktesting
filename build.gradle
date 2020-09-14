@@ -22,14 +22,14 @@ allprojects {
   targetCompatibility = 1.7
 
   group = 'com.clouway.testing'
-  version = '0.0.5'
+  version = '0.0.7'
 
   modifyPom {
     project {
       name 'clouway-ktesting'
       description 'Clouway KTesting Library'
       url 'https://github.com/clouway/clouway-ktesting'
-      inceptionYear '2016'
+      inceptionYear '2020'
 
       scm {
         url 'https://github.com/clouway/clouway-ktesting'

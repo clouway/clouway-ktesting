@@ -1,1 +1,5 @@
-include 'clouway-ktesting-common','clouway-ktesting-json','clouway-ktesting-sitebricks', 'clouway-ktesting-gae'
+include 'clouway-ktesting-common',
+        'clouway-ktesting-json',
+        'clouway-ktesting-sitebricks',
+        'clouway-ktesting-gae',
+        'clouway-ktesting-jmock'
