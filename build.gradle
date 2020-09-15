@@ -1,6 +1,13 @@
 apply plugin: 'java'
 apply plugin: 'com.bmuschko.nexus'
 
+ext {
+  // Kolin
+  kotlinPluginVersion = '1.4.10'
+  kotlinSdkVersion = '1.4.10'
+
+}
+
 buildscript {
   repositories {
     jcenter()
